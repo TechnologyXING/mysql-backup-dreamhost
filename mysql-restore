@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-# Restore your Sendy database.
+#!/bin/bash
+# Restore your WordPress database.
 
 set -e
 set -o pipefail
@@ -22,7 +22,7 @@ db_pass="$(grep -o "define('DB_PASSWORD', '[^']*[^');]'" "${db_conf}" | cut -d "
 db_host="$(grep -o "define('DB_HOST', '[^']*[^');]'" "${db_conf}" | cut -d "," -f 2 | sed "s/'//g;s/ //g")"
 
 if [ -z "${file_name}" ]; then
-    echo "You must supply a file name, example: ${0} $(date +%F)_sendy.sql.gz"
+    echo "You must supply a file name, example: ${0} ${db_name}_$(date +%F).sql.gz"
     exit 1
 fi
 

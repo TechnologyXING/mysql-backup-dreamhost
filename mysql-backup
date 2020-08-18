@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-# Backup your local Sendy database to a compressed file.
+#!/bin/bash
+# Backup WordPress database to a compressed file.
 
 set -e #stop on error
 set -o pipefail #stop on pipe error

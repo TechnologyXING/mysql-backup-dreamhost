@@ -12,6 +12,12 @@ Upload the ```mysql-backup-dreamhost``` folder to your DreamHost Shared server i
  ```
 *Make sure that ```mysql-backup-dreamhost``` is not publicly accessible*
 
+You may need to add execute permissions to the files:
+```
+$ chmod +x mysql-backup
+$ chmod +x mysql-restore
+```
+
 Modify the following variables in the  ```mysql-backup``` and ```mysql-restore``` files.
 ```
 dh_user='techxing' # enter your DreamHost SSH username here
