@@ -33,3 +33,10 @@ To test the variables that are extracted from the file ucomment this line before
 printf "VARS: \n\${db_conf} = '${db_conf}' \n\${db_name} = '${db_name}' \n\${db_user} = '${db_user}' \n\${db_pass} = '${db_pass}' \n\${db_host} = '${db_host}' \nDESTINATION: '${backup_destination}/${db_name}_$(date +%F).sql.gz' \n"; exit;
 ```
 *Values between the single quotes ```'``` are the actual values*
+
+## Caveat
+Script currently doesn't work as-is with database user with a blank password (eg. localhost).
+A work around for this is to set the ```db_pass``` variable manually to ''. ex:
+```
+db_pass='' #"$(grep -o "define('DB_PASSWORD', '[^']*[^');]'" "${db_conf}" | cut -d "," -f 2 | sed "s/'//g;s/ //g")"
+```
