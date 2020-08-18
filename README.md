@@ -2,6 +2,8 @@
 Inspired from this tutorial by Nick Janetakis: [Automatic MySQL / PostgreSQL Backups with a Shell Script and Cron Job](https://www.youtube.com/watch?v=kbCytSYPh0E)\
 Code inspired from [@nickjj/cron-sendy-backup](https://gist.github.com/nickjj/00b07e522caee02e37951ec6de2a9c95)
 
+These scripts may also work on other webhost providers not just DreamHost. Just change the folder names and they way cron is setup.
+
 ## Setup
 [Download](https://github.com/TechnologyXING/mysql-backup-dreamhost/archive/master.zip) and unzip the code in your local folder.
 
