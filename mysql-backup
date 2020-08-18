@@ -18,11 +18,11 @@ db_pass="$(grep -o "define('DB_PASSWORD', '[^']*[^');]'" "${db_conf}" | cut -d "
 db_host="$(grep -o "define('DB_HOST', '[^']*[^');]'" "${db_conf}" | cut -d "," -f 2 | sed "s/'//g;s/ //g")"
 
 # Uncomment to show the variables extracted. The whole script will stop before doing the mysqldump.
-# printf "VARS: \n\${db_conf} = '${db_conf}' \n\${db_name} = '${db_name}' \n\${db_user} = '${db_user}' \n\${db_pass} = '${db_pass}' \n\${db_host} = '${db_host}' \nDESTINATION: '${backup_destination}/${db_name}_$(date +%F).sql.gz' \n"; exit;
+# printf "VARS: \n\${db_conf} = '${db_conf}' \n\${db_name} = '${db_name}' \n\${db_user} = '${db_user}' \n\${db_pass} = '${db_pass}' \n\${db_host} = '${db_host}' \nDESTINATION: '${backup_destination}/${db_name}_$(date +%Y%m%d-%H%M%S).sql.gz' \n"; exit;
 
 # MySQL / MariaDB.
 /usr/bin/mysqldump -h "${db_host}" \
     -u "${db_user}" \
     -p"${db_pass}" \
     "${db_name}" \
-    | gzip > "${backup_destination}/${db_name}_$(date +%F).sql.gz"
+    | gzip > "${backup_destination}/${db_name}_$(date +%Y%m%d-%H%M%S).sql.gz"
