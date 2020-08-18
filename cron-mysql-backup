@@ -1,0 +1,1 @@
+30 0 * * * root /home/<dreamhost user>/mysql-backup-dreamhost/mysql-backup > /dev/null 2>&1
