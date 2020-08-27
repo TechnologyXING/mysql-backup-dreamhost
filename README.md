@@ -32,6 +32,7 @@ $ chmod +x mysql-backup
 $ chmod +x mysql-restore
 ```
 
+
 ## Testing
 This requires that the DreamHost user must have SSH/Secure shell access enabled: [Editing an existing user to become a SHELL user](https://help.dreamhost.com/hc/en-us/articles/216385837-Creating-a-user-with-Shell-SSH-access)
 
