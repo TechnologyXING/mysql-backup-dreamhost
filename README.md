@@ -4,6 +4,8 @@ Code inspired from [@nickjj/cron-sendy-backup](https://gist.github.com/nickjj/00
 
 These scripts may also work on other webhost providers not just DreamHost. Just change the folder names and they way cron is setup.
 
+**This branch processes ```.env``` files. For the WordPress version, checkout the [master](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/master) branch.**
+
 ## Setup
 [Download](https://github.com/TechnologyXING/mysql-backup-dreamhost/archive/master.zip) and unzip the code in your local folder.
 
@@ -12,12 +14,12 @@ Modify the following variables in the  ```mysql-backup``` and ```mysql-restore``
 dh_user='techxing' # enter your DreamHost SSH username here
 dh_web_directory='techxing.net' # enter the your DreamHost web directory here
 ```
-With this setting, the script will access the ```wp-config.php``` in ```/home/techxing/techxing.net/wp-config.php```.\
+With this setting, the script will access the ```.env``` in ```/home/techxing/techxing.net/.env```.\
 And will create the backups in ```/home/techxing/mysql-backup-dreamhost/backups/<WordPress Database>/``` folder.
 
-*(Optional file left here as reference)* Modify the ```<dreamhost user>``` in the ```cron-mysql-backup``` file.
+*(Optional file included here as reference)* Modify the ```<dreamhost user>``` in the ```cron-mysql-backup``` file.
 
-*(Optional file left here as reference)* Modify the ```<dreamhost user>``` in the ```cron-mysql-backup-rotate``` file.\
+*(Optional file included here as reference)* Modify the ```<dreamhost user>``` in the ```cron-mysql-backup-rotate``` file.\
 You can increase or decrease the retention period of the files by modifying the ```+90``` (more than 90 days) variable.
 
 Upload the ```mysql-backup-dreamhost``` folder to your DreamHost Shared server in the ```/home/<dreamhost user>/``` folder via FTP, SSH, or SCP etc. creating the following directory structure (example):
@@ -51,7 +53,7 @@ db_pass='' #"$(grep -o "define('DB_PASSWORD', '[^']*[^');]'" "${db_conf}" | cut 
 ## Creating a cron job in DreamHost
 [Source](https://help.dreamhost.com/hc/en-us/articles/215088668-How-do-I-create-a-cron-job-)
 
-Pro Tip: Test your commands first in the command line before entering them in this cron job and without the delete option.
+**Pro Tip**: Test your commands first in the command line before entering them in this cron job and without the delete option.
 
 ### Cron Job (Backup)
 Go to your [Cron Jobs](https://panel.dreamhost.com/index.cgi?tree=advanced.cron&) panel.
