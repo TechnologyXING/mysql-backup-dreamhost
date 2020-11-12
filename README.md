@@ -2,26 +2,24 @@
 Inspired from this tutorial by Nick Janetakis: [Automatic MySQL / PostgreSQL Backups with a Shell Script and Cron Job](https://www.youtube.com/watch?v=kbCytSYPh0E)\
 Code inspired from [@nickjj/cron-sendy-backup](https://gist.github.com/nickjj/00b07e522caee02e37951ec6de2a9c95)
 
-These scripts may also work on other webhost providers not just DreamHost. Just change the folder names and they way cron is setup.
+These scripts may also work on other webhost providers not just DreamHost. Just change the ```config_path`` and the way cron is setup.
 
 **This branch processes ```.env``` files. For the WordPress version, checkout the [master](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/master) branch.**
 
 ## Setup
-[Download](https://github.com/TechnologyXING/mysql-backup-dreamhost/archive/master.zip) and unzip the code in your local folder.
+[Download](https://github.com/TechnologyXING/mysql-backup-dreamhost/archive/master.zip) and unzip the code in your local folder.\
 *Direct checkout of this repo to your server is not adviced as configs may change*
 
-Modify the following variables in the  ```mysql-backup``` and ```mysql-restore``` files.
+Modify the ```config_path``` variable in the  ```mysql-backup``` and ```mysql-restore``` files.
 ```
-dh_user='techxing' # enter your DreamHost SSH username here
-dh_web_directory='techxing.net' # enter the your DreamHost web directory here
+config_path="/home/techxing/techxing.net"
+# enter the absolute path to the directory where the .env is located. do not include .env and closing slash
 ```
-With this setting, the script will access the ```.env``` in ```/home/techxing/techxing.net/.env```.\
-And will create the backups in ```/home/techxing/mysql-backup-dreamhost/backups/<WordPress Database>/``` folder.
 
-*(Optional file included here as reference)* Modify the ```<dreamhost user>``` in the ```cron-mysql-backup``` file.
+Modify the ```/absolute/path/to/mysql-backup-dreamhost``` in the ```cron-mysql-backup``` file. *(Optional file included here as reference for a different cron setup)*
 
-*(Optional file included here as reference)* Modify the ```<dreamhost user>``` in the ```cron-mysql-backup-rotate``` file.\
-You can increase or decrease the retention period of the files by modifying the ```+90``` (more than 90 days) variable.
+Modify the ```/absolute/path/to/mysql-backup-dreamhost``` in the ```cron-mysql-backup-rotate``` file. *(Optional file included here as reference for a different cron setup)*
+You can increase or decrease the retention period of the files by modifying the ```+90``` (*checks if older than 90 days*) variable.
 
 Upload the ```mysql-backup-dreamhost``` folder to your DreamHost Shared server in the ```/home/<dreamhost user>/``` folder via FTP, SSH, or SCP etc. creating the following directory structure (example):
  ```
@@ -35,7 +33,10 @@ $ chmod +x mysql-backup
 $ chmod +x mysql-restore
 ```
 
-**Tip**: A new folder with a new set of configs can be uploaded and setup.
+With this setting, the script will access the ```.env``` in ```/home/techxing/techxing.net/.env```.\
+And will create the backups in ```/home/techxing/mysql-backup-dreamhost/backups/``` folder.
+
+**Tip**: Upload the ```mysql-backup-dreamhost```  with a new name and modify the config to create a new instance of the backup. Then create a different cron job for the new instance.
 
 ## Testing
 This requires that the DreamHost user must have SSH/Secure shell access enabled: [Editing an existing user to become a SHELL user](https://help.dreamhost.com/hc/en-us/articles/216385837-Creating-a-user-with-Shell-SSH-access)
@@ -46,17 +47,10 @@ printf "VARS: \n\${db_conf} = '${db_conf}' \n\${db_name} = '${db_name}' \n\${db_
 ```
 *Values between the single quotes ```'``` are the actual values*
 
-## Caveat
-Script currently doesn't work as-is with database user with a blank password (eg. localhost).\
-A work around for this is to set the ```db_pass``` variable manually to '' (blank, empty). Example:
-```
-db_pass='' #"$(grep -o "define('DB_PASSWORD', '[^']*[^');]'" "${db_conf}" | cut -d "," -f 2 | sed "s/'//g;s/ //g")"
-```
-
 ## Creating a cron job in DreamHost
 [Source](https://help.dreamhost.com/hc/en-us/articles/215088668-How-do-I-create-a-cron-job-)
 
-**Pro Tip**: Test your commands first in the command line before entering them in this cron job and without the delete option.
+**Pro Tip**: Test your commands first in the command line (without the delete option) before entering them in this cron job.
 
 ### Cron Job (Backup)
 Go to your [Cron Jobs](https://panel.dreamhost.com/index.cgi?tree=advanced.cron&) panel.
@@ -89,11 +83,21 @@ Type in a meaningful title for the job (example) ```Cleanup DB Backup more than 
 
 (Optional) Enter an email to notify.
 
-Enter the full path of the ```mysql-backup``` in the command to run, (example)
+Enter the following in the command to run, (example)
 ```
 find /home/techxing/mysql-backup-dreamhost/backups -type f -mtime +90 -delete > /dev/null 2>&1
 ```
+*Where ```/home/techxing/mysql-backup-dreamhost/backups``` is the absolute path to the backups folder*
 
 Set to run ```Daily```
 
 Submit the form.
+
+---
+
+## Caveat
+Script currently doesn't work as-is with database credentials with a blank password (eg. localhost).\
+A work around for this is to set the ```db_pass``` variable manually to '' (blank, empty). Example:
+```
+db_pass="" #"$(grep -o "DB_PASSWORD=[^']*[^']" "${db_conf}" | cut -d "=" -f 2 | sed "s/'//g;s/ //g")"
+```

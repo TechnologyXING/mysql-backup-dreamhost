@@ -1,1 +1,1 @@
-0 0 1 * * root find /home/<dreamhost user>/mysql-backup-dreamhost/backups -type f -mtime +90 -delete > /dev/null 2>&1
+0 0 1 * * root find /absolute/path/to/mysql-backup-dreamhost/backups -type f -mtime +90 -delete > /dev/null 2>&1
