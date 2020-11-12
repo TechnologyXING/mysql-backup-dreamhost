@@ -1,19 +1,19 @@
 #!/bin/bash
 # Restore your WordPress database.
 
-set -e
-set -o pipefail
+set -e #stop on error
+set -o pipefail #stop on pipe error
 
 # start of SETUP
 config_path="/home/techxing/techxing.net"
 # end of SETUP
 
-backup_destination="`dirname "$0"`/backups" # absolute path of this script plus a backup folder
+backup_destination="$(dirname $(readlink -f $0))/backups" # absolute path of this script plus a backup folder
 db_conf="${config_path}/.env" # "/absolute/path/to/wordpress/.env"
-db_name="$(grep -o "define('DB_NAME', '[^']*[^');]'" "${db_conf}" | cut -d "," -f 2 | sed "s/'//g;s/ //g")"
-db_user="$(grep -o "define('DB_USER', '[^']*[^');]'" "${db_conf}" | cut -d "," -f 2 | sed "s/'//g;s/ //g")"
-db_pass="$(grep -o "define('DB_PASSWORD', '[^']*[^');]'" "${db_conf}" | cut -d "," -f 2 | sed "s/'//g;s/ //g")"
-db_host="$(grep -o "define('DB_HOST', '[^']*[^');]'" "${db_conf}" | cut -d "," -f 2 | sed "s/'//g;s/ //g")"
+db_name=$(grep "DB_NAME=[^']*[^']" "${db_conf}" | cut -d "=" -f 2 | sed $'s/[^[:print:]\t]//g')
+db_user=$(grep "DB_USER=[^']*[^']" "${db_conf}" | cut -d "=" -f 2 | sed $'s/[^[:print:]\t]//g')
+db_pass=$(grep "DB_PASSWORD=[^']*[^']" "${db_conf}" | cut -d "=" -f 2 | sed $'s/[^[:print:]\t]//g')
+db_host=$(grep "DB_HOST=[^']*[^']" "${db_conf}" | cut -d "=" -f 2 | sed $'s/[^[:print:]\t]//g')
 
 file_name="${1}"
 restore_path="${backup_destination}/${file_name}"
