@@ -10,7 +10,7 @@ dh_web_directory='techxing.net'
 # end of SETUP
 
 dh_user_folder="/home/${dh_user}"
-backup_destination="${dh_user_folder}/mysql-backup-dreamhost/backups"
+backup_destination="`dirname "$0"`/backups" #absolute path of this script with a backup folder
 db_conf="${dh_user_folder}/${dh_web_directory}/.env"
 db_name="$(grep -o "DB_NAME=[^']*[^']" ".env" | cut -d "=" -f 2 | sed "s/'//g;s/ //g")"
 db_user="$(grep -o "DB_USER=[^']*[^']" "${db_conf}" | cut -d "=" -f 2 | sed "s/'//g;s/ //g")"

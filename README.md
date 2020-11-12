@@ -8,6 +8,7 @@ These scripts may also work on other webhost providers not just DreamHost. Just 
 
 ## Setup
 [Download](https://github.com/TechnologyXING/mysql-backup-dreamhost/archive/master.zip) and unzip the code in your local folder.
+*Direct checkout of this repo to your server is not adviced as configs may change*
 
 Modify the following variables in the  ```mysql-backup``` and ```mysql-restore``` files.
 ```
@@ -34,10 +35,12 @@ $ chmod +x mysql-backup
 $ chmod +x mysql-restore
 ```
 
+**Tip**: A new folder with a new set of configs can be uploaded and setup.
+
 ## Testing
 This requires that the DreamHost user must have SSH/Secure shell access enabled: [Editing an existing user to become a SHELL user](https://help.dreamhost.com/hc/en-us/articles/216385837-Creating-a-user-with-Shell-SSH-access)
 
-To test the variables that are extracted from the file ucomment this line before the ```mysqldump``` command and execute the file in the command line to display the values: (example) ```./mysql-backup``` or ```./mysql-restore```
+To test the variables that are extracted from the file uncomment this line before the ```mysqldump``` command and execute the file in the command line to display the values: (example) ```./mysql-backup``` or ```./mysql-restore```
 ```
 printf "VARS: \n\${db_conf} = '${db_conf}' \n\${db_name} = '${db_name}' \n\${db_user} = '${db_user}' \n\${db_pass} = '${db_pass}' \n\${db_host} = '${db_host}' \nDESTINATION: '${backup_destination}/${db_name}_$(date +%Y%m%d-%H%M%S).sql.gz' \n"; exit;
 ```
