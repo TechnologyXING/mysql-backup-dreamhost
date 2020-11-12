@@ -10,10 +10,10 @@ config_path="/home/techxing/techxing.net"
 
 backup_destination="`dirname "$0"`/backups" # absolute path of this script plus a backup folder
 db_conf="${config_path}/.env" # "/absolute/path/to/wordpress/.env"
-db_name="$(grep -o "DB_NAME=[^']*[^']" "${db_conf}" | cut -d "=" -f 2 | sed "s/'//g;s/ //g")"
-db_user="$(grep -o "DB_USER=[^']*[^']" "${db_conf}" | cut -d "=" -f 2 | sed "s/'//g;s/ //g")"
-db_pass="$(grep -o "DB_PASSWORD=[^']*[^']" "${db_conf}" | cut -d "=" -f 2 | sed "s/'//g;s/ //g")"
-db_host="$(grep -o "DB_HOST=[^']*[^']" "${db_conf}" | cut -d "=" -f 2 | sed "s/'//g;s/ //g")"
+db_name="$(grep "DB_NAME=[^']*[^']" "${db_conf}" | cut -d "=" -f 2 | sed $'s/[^[:print:]\t]//g')"
+db_user="$(grep "DB_USER=[^']*[^']" "${db_conf}" | cut -d "=" -f 2 | sed $'s/[^[:print:]\t]//g')"
+db_pass="$(grep "DB_PASSWORD=[^']*[^']" "${db_conf}" | cut -d "=" -f 2 | sed $'s/[^[:print:]\t]//g')"
+db_host="$(grep "DB_HOST=[^']*[^']" "${db_conf}" | cut -d "=" -f 2 | sed $'s/[^[:print:]\t]//g')"
 
 # Uncomment to show the variables extracted. The whole script will stop before doing the mysqldump.
 # printf "VARS: \n\${db_conf} = '${db_conf}' \n\${db_name} = '${db_name}' \n\${db_user} = '${db_user}' \n\${db_pass} = '${db_pass}' \n\${db_host} = '${db_host}' \nDESTINATION: '${backup_destination}/${db_name}_$(date +%Y%m%d-%H%M%S).sql.gz' \n"; exit;
