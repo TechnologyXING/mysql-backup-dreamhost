@@ -4,16 +4,18 @@ Code inspired from [@nickjj/cron-sendy-backup](https://gist.github.com/nickjj/00
 
 These scripts may also work on other webhost providers not just DreamHost. Just change the ```config_path`` and the way cron is setup.
 
-**This branch processes ```.env``` files. For the WordPress version, checkout the [master](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/master) branch.**
+**This branch processes CodeIgniter 3 ```database.php``` files.**\
+For the WordPress version, checkout the [master](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/master) branch.\
+For the WordPress .env version, checkout the [master](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/env) branch.
 
 ## Setup
-[Download](https://github.com/TechnologyXING/mysql-backup-dreamhost/archive/master.zip) and unzip the code in your local folder.\
-*Direct checkout of this repo to your server is not adviced as configs may change*
+[Download](https://github.com/TechnologyXING/mysql-backup-dreamhost/archive/ci3.zip) and unzip the code in your local folder.\
+*Direct checkout of this repo to your server is NOT ADVICED as configs may change.*
 
 Modify the ```config_path``` variable in the  ```mysql-backup``` and ```mysql-restore``` files.
 ```
-config_path="/home/techxing/techxing.net"
-# enter the absolute path to the directory where the .env is located. do not include .env and closing slash
+config_path="/home/techxing/techxing.net/application/config"
+# enter the absolute path to the directory where the database.php is located. do not include database.php and closing slash
 ```
 
 Modify the ```/absolute/path/to/mysql-backup-dreamhost``` in the ```cron-mysql-backup``` file. *(Optional file included here as reference for a different cron setup)*
@@ -33,10 +35,10 @@ $ chmod +x mysql-backup
 $ chmod +x mysql-restore
 ```
 
-With this setting, the script will access the ```.env``` in ```/home/techxing/techxing.net/.env```.\
-And will create the backups in ```/home/techxing/mysql-backup-dreamhost/backups/``` folder.
+With this setting, the script will access the ```/home/techxing/techxing.net/application/config/database.php``` file.\
+And this will create the backups in ```/home/techxing/mysql-backup-dreamhost/backups/``` folder.
 
-**Tip**: Upload the ```mysql-backup-dreamhost```  with a new name and modify the config to create a new instance of the backup. Then create a different cron job for the new instance.
+**Tip**: Upload the ```mysql-backup-dreamhost``` folder with a new name and modify the config to create a new instance of the backup. Then create a different cron job for the new instance.
 
 ## Testing
 This requires that the DreamHost user must have SSH/Secure shell access enabled: [Editing an existing user to become a SHELL user](https://help.dreamhost.com/hc/en-us/articles/216385837-Creating-a-user-with-Shell-SSH-access)
