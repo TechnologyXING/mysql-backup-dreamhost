@@ -6,7 +6,7 @@ These scripts may also work on other webhost providers not just DreamHost. Just 
 
 **This branch processes ```.env``` files.**\
 For the WordPress version, checkout the [master](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/master) branch.\
-For the CodeIgniter 3 version, checout the [ci3](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/ci3) branch.
+For the CodeIgniter 3 version, checkout the [ci3](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/ci3) branch.
 
 ## Setup
 [Download](https://github.com/TechnologyXING/mysql-backup-dreamhost/archive/env.zip) and unzip the code in your local folder.\
