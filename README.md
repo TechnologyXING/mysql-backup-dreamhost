@@ -4,9 +4,9 @@ Code inspired from [@nickjj/cron-sendy-backup](https://gist.github.com/nickjj/00
 
 These scripts may also work on other webhost providers not just DreamHost. Just change the ```config_path`` and the way cron is setup.
 
-**This branch processes CodeIgniter 3 ```database.php``` files.**\
+**This branch processes CodeIgniter 3 ```database.php``` file.**\
 For the WordPress version, checkout the [master](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/master) branch.\
-For the WordPress .env version, checkout the [master](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/env) branch.
+For the .env version, checkout the [env](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/env) branch.
 
 ## Setup
 [Download](https://github.com/TechnologyXING/mysql-backup-dreamhost/archive/ci3.zip) and unzip the code in your local folder.\
