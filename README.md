@@ -7,7 +7,7 @@ These scripts may also work on other webhost providers not just DreamHost. Just 
 **This branch processes ```.env``` files. For the WordPress version, checkout the [master](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/master) branch.**
 
 ## Setup
-[Download](https://github.com/TechnologyXING/mysql-backup-dreamhost/archive/master.zip) and unzip the code in your local folder.\
+[Download](https://github.com/TechnologyXING/mysql-backup-dreamhost/archive/env.zip) and unzip the code in your local folder.\
 *Direct checkout of this repo to your server is not adviced as configs may change*
 
 Modify the ```config_path``` variable in the  ```mysql-backup``` and ```mysql-restore``` files.
