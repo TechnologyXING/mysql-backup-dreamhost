@@ -4,6 +4,10 @@ Code inspired from [@nickjj/cron-sendy-backup](https://gist.github.com/nickjj/00
 
 These scripts may also work on other webhost providers not just DreamHost. Just change the folder names and they way cron is setup.
 
+**This branch processes WordPress the ```wp-config.php``` file.**\
+For the .env version, checkout the [env](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/env) branch.\
+For the CodeIgniter 3 version, checkout the [ci3](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/ci3) branch.
+
 ## Setup
 [Download](https://github.com/TechnologyXING/mysql-backup-dreamhost/archive/master.zip) and unzip the code in your local folder.
 
@@ -12,7 +16,7 @@ Modify the following variables in the  ```mysql-backup``` and ```mysql-restore``
 dh_user='techxing' # enter your DreamHost SSH username here
 dh_web_directory='techxing.net' # enter the your DreamHost web directory here
 ```
-With this setting, the script will access the ```wp-config.php``` in ```/home/techxing/techxing.net/wp-config.php```.\
+With this setting, the script will ```/home/techxing/techxing.net/wp-config.php``` file.\
 And will create the backups in ```/home/techxing/mysql-backup-dreamhost/backups/<WordPress Database>/``` folder.
 
 *(Optional file left here as reference)* Modify the ```<dreamhost user>``` in the ```cron-mysql-backup``` file.
