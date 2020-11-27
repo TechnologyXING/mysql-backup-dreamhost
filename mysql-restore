@@ -1,5 +1,5 @@
 #!/bin/bash
-# Restore your WordPress database.
+# Restore your MySQL database to a compressed file with credentials based on a .env file.
 
 set -e #stop on error
 set -o pipefail #stop on pipe error

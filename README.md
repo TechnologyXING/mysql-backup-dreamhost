@@ -2,9 +2,11 @@
 Inspired from this tutorial by Nick Janetakis: [Automatic MySQL / PostgreSQL Backups with a Shell Script and Cron Job](https://www.youtube.com/watch?v=kbCytSYPh0E)\
 Code inspired from [@nickjj/cron-sendy-backup](https://gist.github.com/nickjj/00b07e522caee02e37951ec6de2a9c95)
 
-These scripts may also work on other webhost providers not just DreamHost. Just change the ```config_path`` and the way cron is setup.
+These scripts may also work on other webhost providers not just DreamHost. Just change the ```config_path``` and the way cron is setup.
 
-**This branch processes ```.env``` files. For the WordPress version, checkout the [master](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/master) branch.**
+**This branch processes ```.env``` files.**\
+For the WordPress version, checkout the [master](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/master) branch.\
+For the CodeIgniter 3 version, checout the [ci3](https://github.com/TechnologyXING/mysql-backup-dreamhost/tree/ci3) branch.
 
 ## Setup
 [Download](https://github.com/TechnologyXING/mysql-backup-dreamhost/archive/env.zip) and unzip the code in your local folder.\
@@ -33,7 +35,7 @@ $ chmod +x mysql-backup
 $ chmod +x mysql-restore
 ```
 
-With this setting, the script will access the ```.env``` in ```/home/techxing/techxing.net/.env```.\
+With this setting, the script will access the ```/home/techxing/techxing.net/.env``` file.\
 And will create the backups in ```/home/techxing/mysql-backup-dreamhost/backups/``` folder.
 
 **Tip**: Upload the ```mysql-backup-dreamhost```  with a new name and modify the config to create a new instance of the backup. Then create a different cron job for the new instance.
