@@ -48,6 +48,24 @@ And this will create the backups in ```/home/techxing/mysql-backup-dreamhost/bac
 
 **Tip**: Upload the ```mysql-backup-dreamhost``` folder with a new name and modify the config to create a new instance of the backup. Then create a different cron job for the new instance.
 
+Add a new configuration in your CodeIgniter 3 ``database.php`` file where the database backup will be sent.
+```
+$db['default']['notifyme'] = "admin@example.com"
+```
+
+On your server, ``cd`` to the uploaded ``mysql-backup-dreamhost`` create a new encryption keys for the mysqldump. [*](https://gist.github.com/pugsley/2914b9c0d1e7b866eab2a4cc0ceb0ead)
+
+```
+$ openssl req -x509 -nodes -newkey rsa:2048 -keyout mysqldump-key.priv.pem -out mysqldump-key.pub.pem
+```
+
+To decrypt and decompress to backups:
+```
+$ openssl smime -decrypt -in [filename].sql.gz.enc -binary -inform DEM -inkey mysqldump-key.priv.pem -out [filename].sql.gz
+$ gzip -d [filename].sql.gz
+```
+
+
 ## Testing
 This requires that the DreamHost user must have SSH/Secure shell access enabled: [Editing an existing user to become a SHELL user](https://help.dreamhost.com/hc/en-us/articles/216385837-Creating-a-user-with-Shell-SSH-access)
 

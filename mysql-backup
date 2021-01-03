@@ -9,20 +9,26 @@ config_path="/home/techxing/techxing.net/application/config"
 # end of SETUP
 
 script_location=$(dirname $(readlink -f $0))  # absolute path of this script
+public_key="${script_location}/mysqldump-key.pub.pem"
 backup_destination="${script_location}/backups" # absolute path the backups folder
 my_cnf_location="${script_location}/.my.cnf" # absolute path to mysqldump config file
 archive_date=$(date +%Y%m%d-%H%M%S)
 db_conf="${config_path}/database.php" # "/absolute/path/to/codeigniter/application/config/database.php"
-db_name=$(grep "\$db\['default'\]\['hostname'\] = '[^']*[^']'" "${db_conf}" | cut -d "=" -f 2 | sed $'s/[^[:print:]\t]//;s/\'//g;s/ //;s/;//g')
+db_host=$(grep "\$db\['default'\]\['hostname'\] = '[^']*[^']'" "${db_conf}" | cut -d "=" -f 2 | sed $'s/[^[:print:]\t]//;s/\'//g;s/ //;s/;//g')
 db_user=$(grep "\$db\['default'\]\['username'\] = '[^']*[^']'" "${db_conf}" | cut -d "=" -f 2 | sed $'s/[^[:print:]\t]//;s/\'//g;s/ //;s/;//g')
 db_pass=$(grep "\$db\['default'\]\['password'\] = '[^']*[^']'" "${db_conf}" | cut -d "=" -f 2 | sed $'s/[^[:print:]\t]//;s/\'//g;s/ //;s/;//g')
-db_host=$(grep "\$db\['default'\]\['database'\] = '[^']*[^']'" "${db_conf}" | cut -d "=" -f 2 | sed $'s/[^[:print:]\t]//;s/\'//g;s/ //;s/;//g')
-db_filename="${db_name}_${archive_date}.sql.gz"
+db_name=$(grep "\$db\['default'\]\['database'\] = '[^']*[^']'" "${db_conf}" | cut -d "=" -f 2 | sed $'s/[^[:print:]\t]//;s/\'//g;s/ //;s/;//g')
+db_mail=$(grep "\$db\['default'\]\['notifyme'\] = '[^']*[^']'" "${db_conf}" | cut -d "=" -f 2 | sed $'s/[^[:print:]\t]//;s/\'//g;s/ //;s/;//g')
+db_filename="${db_name}_${archive_date}.sql.gz.enc"
 
 # Uncomment to show the variables extracted. The whole script will stop before doing the mysqldump.
-printf "VARS: \n\${script_location} = '${script_location}' \n\${backup_destination} = '${backup_destination}' \n\${my_cnf_location} = '${my_cnf_location}' \n\${db_conf} = '${db_conf}' \n\${db_name} = '${db_name}' \n\${db_user} = '${db_user}' \n\${db_pass} = '${db_pass}' \n\${db_host} = '${db_host}' \nDESTINATION: '${backup_destination}/${db_filename}' \n"; exit;
+# printf "VARS: \n\${script_location} = '${script_location}' \n\${backup_destination} = '${backup_destination}' \n\${my_cnf_location} = '${my_cnf_location}' \n\${db_conf} = '${db_conf}' \n\${db_name} = '${db_name}' \n\${db_user} = '${db_user}' \n\${db_pass} = '${db_pass}' \n\${db_host} = '${db_host}' \nDESTINATION: '${backup_destination}/${db_filename}' \n"; exit;
 
 # MySQL / MariaDB.
 /usr/bin/mysqldump --defaults-file=${my_cnf_location} \
     "${db_name}" \
-    | gzip > "${backup_destination}/${db_filename}"
+    | gzip -c \
+    | openssl smime -encrypt -binary -text -aes256 -out "${backup_destination}/${db_filename}" -outform DER ${public_key}
+
+# send mail as attachement
+echo "Daily DB Backup of ${db_name} generated on ${archive_date}. This is an automated message. Please contact the server administrator if there are any issues." | mutt -a "${backup_destination}/${db_filename}" -s "Daily DB Backup" -- ${db_mail}
