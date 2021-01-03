@@ -10,7 +10,15 @@ For the .env version, checkout the [env](https://github.com/TechnologyXING/mysql
 
 ## Setup
 [Download](https://github.com/TechnologyXING/mysql-backup-dreamhost/archive/ci3.zip) and unzip the code in your local folder.\
-*Direct checkout of this repo to your server is NOT ADVICED as configs may change.*
+*Direct checkout of this repo to your server is NOT ADVISABLE as configs may change.*
+
+Modify the contents of ``.my.cnf`` file with a username and password that has access to the target database. [*](https://stackoverflow.com/questions/9293042/how-to-perform-a-mysqldump-without-a-password-prompt) \
+This user may be a different user from the target ``database.php`` as long as the user has dump access on the target database.
+
+Change the access of the ``.my.conf`` file to ``600`` or ``400``
+```
+$ chmod 600 .my.cnf
+```
 
 Modify the ```config_path``` variable in the  ```mysql-backup``` and ```mysql-restore``` files.
 ```
