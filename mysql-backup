@@ -30,5 +30,18 @@ db_filename="${db_name}_${archive_date}.sql.gz.enc"
     | gzip -c \
     | openssl smime -encrypt -binary -text -aes256 -out "${backup_destination}/${db_filename}" -outform DER ${public_key}
 
-# send mail as attachement
-echo "Daily DB Backup of ${db_name} generated on ${archive_date}. This is an automated message. Please contact the server administrator if there are any issues." | mutt -a "${backup_destination}/${db_filename}" -s "Daily DB Backup" -- ${db_mail}
+# Split by 20 megabytes for e-mail attachment. Combine using ```cat ${db_name}_${archive_date}-part_* >> ${db_name}_${archive_date}.sql.gz.enc```
+split -b 20MiB "${backup_destination}/${db_filename}" "${script_location}/backups/tmp/${db_name}_${archive_date}-part_"
+echo "This is an automated message. Please contact the server administrator if there are any issues."
+
+FILES="${script_location}/backups/tmp/${db_name}_${archive_date}-part_*"
+for f in $FILES
+do
+    # email file as attachement
+    echo "Emailing ${f}" 
+    echo "Hourly DB Backup of ${db_name} generated on ${archive_date}. This is an automated message. Please contact the server administrator if there are any issues." | mutt -a "${f}" -s "Hourly DB Backup Part ${f##*/}" -- ${db_mail}
+done
+
+echo "Cleaning up tmp files..."
+rm ${script_location}/backups/tmp/${db_name}_${archive_date}-part_*
+echo "DB Backup of ${db_name} generated on ${archive_date} completed."
