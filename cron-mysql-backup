@@ -1,1 +1,1 @@
-30 0 * * * root /absolute/path/to/mysql-backup-dreamhost/mysql-backup > /dev/null 2>&1
+0 * * * * root /absolute/path/to/mysql-backup-dreamhost/mysql-backup > /dev/null 2>&1
